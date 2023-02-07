@@ -22,7 +22,15 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({
+          animal: animalInput,
+          userInfo: {
+            asset: 1200000,
+            holdProfit: -40000,
+            tradeIn6Months: 200,
+            riskLevelName: '保守型',
+          }
+        }),
       });
 
       const data = await response.json();
@@ -43,8 +51,14 @@ export default function Home() {
     <div>
       
       <main className={styles.main}>
-        <MyDialog type={'user'}/>
-        <MyDialog type={'gpt'}/>
+        {
+          result && result
+              .filter(item => item.display)
+              .map(item => {
+                return <MyDialog type={item.type} text={item.text}></MyDialog>
+              })
+        }
+        <div>{JSON.stringify(result)}</div>
         <form onSubmit={onSubmit} className={styles.footer}>
           <input
             type="text"
