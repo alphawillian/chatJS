@@ -1,0 +1,35 @@
+.main{
+  display: flex;
+  align-items: top;
+  margin-bottom: 10px;
+  .header{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  &.user{
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    padding-left: 50px;
+    .text{
+      background-color: gainsboro;
+      margin-right: 10px;
+    }
+  }
+  &.gpt{
+    justify-content: flex-start;
+    padding-right: 50px;
+    .text{
+      background-color: cyan;
+      margin-left: 10px;
+    }
+  }
+  .text{
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+}
+
+.text{
+
+}
