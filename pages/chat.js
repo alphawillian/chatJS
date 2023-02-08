@@ -3,15 +3,16 @@
  * @Description: 文件描述
  * @Date: 2023-02-07 19:55:56
  * @LastEditors: willian126@126.com
- * @LastEditTime: 2023-02-08 11:12:10
+ * @LastEditTime: 2023-02-08 14:20:21
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./chat.module.scss";
 import MyDialog from './components/MyDialog'
 
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
   const [result, setResult] = useState();
+  const [userInfo, setUserInfo] = useState({})
 
   const quickInputArr = [
     {
@@ -39,12 +40,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           animal: animalInput,
-          userInfo: {
-            asset: 1200000,
-            holdProfit: -40000,
-            tradeIn6Months: 200,
-            riskLevelName: '保守型',
-          }
+          userInfo
         }),
       });
 
@@ -61,10 +57,24 @@ export default function Home() {
       alert(error.message);
     }
   }
+  // 进入页面
+  useEffect(() => {
+    initInfo()
+    console.log('进入页面')
+  })
+
+  // 初始化用户和默认回答数据
+  const initInfo = () => {
+    let info = sessionStorage.getItem('userInfo') || '{}'
+    info = JSON.parse(info) || {}
+    setUserInfo(info)
+    let answer = sessionStorage.getItem('defaultAnswer') || '{}'
+    answer = JSON.parse(answer)
+    setResult(answer.answer)
+  }
 
   const quickInput = (code) => {
     console.log('code:', code)
-    let text = ''
     const quickItem = quickInputArr.find((item) => {
       return item.code === code
     })
@@ -89,7 +99,6 @@ export default function Home() {
                 return <MyDialog type={item.type} text={item.text} />
               })
         }
-        <div>{JSON.stringify(result)}</div>
         <div className={styles.footer}>
           <div className={styles.quickInput}>
             <div className={styles.in}>
