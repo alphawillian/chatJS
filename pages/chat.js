@@ -3,7 +3,7 @@
  * @Description: 文件描述
  * @Date: 2023-02-07 19:55:56
  * @LastEditors: willian126@126.com
- * @LastEditTime: 2023-02-08 18:13:06
+ * @LastEditTime: 2023-02-08 19:19:13
  */
 import { useState, useEffect } from "react";
 import styles from "./chat.module.scss";
@@ -44,10 +44,14 @@ export default function Home() {
     // result.push({
     //   type: 'gpt',
     //   display: true,
-    //   text: 'fjdsaofja房间打扫房间哦撒娇佛的撒',
+    //   text: '分解到附近殴打撒附件三',
     // });
-    // setResult(result);
-    // return false
+    // setTimeout(() => {
+    //   setResult([...result]);
+    // }, 5000)
+    
+
+    return false
 
     try {
       const response = await fetch("/api/generate", {
@@ -83,6 +87,19 @@ export default function Home() {
     initInfo()
     console.log('进入页面')
   }, [loaded])
+
+  const scrollToTop = () => {
+    // 距离顶部的距离
+    const vh = document.documentElement.clientHeight
+    const dh = document.documentElement.scrollHeight
+    const gap = document.documentElement.scrollTop || document.body.scrollTop
+    console.log('vh:', vh, 'gap:', gap, document.documentElement)
+    window.scrollTo(0, dh - vh - 10);
+    
+  }
+  useEffect(() => {
+    scrollToTop()
+  }, [result])
 
   // 初始化用户和默认回答数据
   const initInfo = () => {

@@ -17,7 +17,6 @@ export default function MyDialog(props) {
   const [visible, setVisible] = useState(false);
   const [animalInput, setAnimalInput] = useState("");
   const [result, setResult] = useState([]);
-  console.log('userInfo:', userInfo)
 
   const showModal = () => {
     setVisible(true)
