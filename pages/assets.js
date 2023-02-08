@@ -3,7 +3,7 @@
  * @Description: 文件描述
  * @Date: 2023-02-07 19:55:56
  * @LastEditors: willian126@126.com
- * @LastEditTime: 2023-02-08 15:21:13
+ * @LastEditTime: 2023-02-08 16:32:35
  */
 import { useState, useEffect } from "react";
 import classnames from "classnames";
@@ -37,8 +37,9 @@ export default function MyDialog(props) {
   }
   // 进入页面执行
   useEffect(() => {
-    // onSubmit()
+    onSubmit()
   })
+  
   async function onSubmit() {
     try {
       const response = await fetch("/api/generate", {
@@ -92,7 +93,7 @@ export default function MyDialog(props) {
         }
         </Modal.Body>
         <Modal.Footer>
-          <div onClick={goChat}>聊一聊</div>
+          <div className={styles.gochat} onClick={goChat}>聊一聊</div>
         </Modal.Footer>
       </Modal>
 
