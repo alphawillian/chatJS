@@ -3,7 +3,7 @@
  * @Description: 文件描述
  * @Date: 2023-02-07 19:55:56
  * @LastEditors: willian126@126.com
- * @LastEditTime: 2023-02-08 16:32:35
+ * @LastEditTime: 2023-02-08 15:21:13
  */
 import { useState, useEffect } from "react";
 import classnames from "classnames";
@@ -15,18 +15,7 @@ import styles from "./assets.module.scss";
 export default function MyDialog(props) {
   const [visible, setVisible] = useState(false);
   const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState([
-    {
-      type: 'gpt',
-      display: true,
-      text: '飞机哦啊见佛大家佛大家佛的撒飞机带搜啊放假哦'
-    },
-    {
-      type: 'gpt',
-      display: true,
-      text: 'ewqrweqr发动机奥飞骄傲分解到司法局搜打飞机奥飞机哦撒娇佛道撒娇发分解到范德萨范德萨范德萨'
-    }
-  ]);
+  const [result, setResult] = useState([]);
   console.log('userInfo:', userInfo)
 
   const showModal = () => {
@@ -37,10 +26,37 @@ export default function MyDialog(props) {
   }
   // 进入页面执行
   useEffect(() => {
-    onSubmit()
-  })
-  
-  async function onSubmit() {
+    async function _() {
+      await onSubmit(question1());
+      await onSubmit(question2());
+    }
+
+    _();
+  }, [userInfo])
+
+  const question1 = () => {
+    const q1 = `我的投资情况: 资产${userInfo.asset}元，持仓${userInfo.holdProfit >= 0 ? '收益' : '亏损'}${Math.abs(userInfo.holdProfit)}元，近半年交易${userInfo.tradeIn6Months}笔，请给出少于200字的评价。`;
+    result.push({
+      type: 'user',
+      display: false,
+      text: q1,
+    })
+    setResult(result);
+    return q1;
+  }
+
+  const question2 = () => {
+    const q2 = `我是一个${userInfo.riskLevelName}的投资者，当前市场状态，应该投偏股基金还是偏债基金？`;
+    result.push({
+      type: 'user',
+      display: false,
+      text: q2,
+    })
+    setResult(result);
+    return q2;
+  }
+
+  async function onSubmit(text) {
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -48,7 +64,7 @@ export default function MyDialog(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          animal: 'aaaa',
+          animal: text,
           userInfo
         }),
       });
@@ -58,7 +74,13 @@ export default function MyDialog(props) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
+      result.push({
+        type: 'gpt',
+        display: true,
+        text: data.result,
+      })
+      setResult(result);
+      console.log(`result: ${JSON.stringify(result)}`);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);

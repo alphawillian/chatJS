@@ -10,6 +10,7 @@ import styles from "./chat.module.scss";
 import MyDialog from './components/MyDialog'
 
 export default function Home() {
+  const [loaded, setLoaded] = useState(false);
   const [animalInput, setAnimalInput] = useState("");
   const [result, setResult] = useState();
   const [userInfo, setUserInfo] = useState({})
@@ -22,16 +23,24 @@ export default function Home() {
       code: '02',
       text: '什么基金好？'
     }, {
-      code: '01',
+      code: '03',
       text: '可以止盈吗？'
     }, {
-      code: '02',
+      code: '04',
       text: '行情怎么样？'
     }
   ]
 
   async function onSubmit(event) {
     event.preventDefault();
+    result.push({
+      type: 'user',
+      display: true,
+      text: animalInput,
+    });
+    setResult(result);
+    setAnimalInput("");
+
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -49,8 +58,12 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
-      setAnimalInput("");
+      result.push({
+        type: 'gpt',
+        display: true,
+        text: data.result,
+      });
+      setResult(result);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -61,7 +74,7 @@ export default function Home() {
   useEffect(() => {
     initInfo()
     console.log('进入页面')
-  })
+  }, [loaded])
 
   // 初始化用户和默认回答数据
   const initInfo = () => {
@@ -75,6 +88,7 @@ export default function Home() {
 
   const quickInput = (code) => {
     console.log('code:', code)
+    let text = ''
     const quickItem = quickInputArr.find((item) => {
       return item.code === code
     })
@@ -99,6 +113,7 @@ export default function Home() {
                 return <MyDialog type={item.type} text={item.text} />
               })
         }
+        <div style={{display: 'none'}}>{JSON.stringify(result)}</div>
         <div className={styles.footer}>
           <div className={styles.quickInput}>
             <div className={styles.in}>
