@@ -34,7 +34,6 @@ const userArr = [
 const getRandomUser = () => {
   const length = userArr.length
   const random = Math.floor(Math.random() * length)
-  console.log('random:', random)
   return userArr[random]
 }
 const userInfo = getRandomUser()

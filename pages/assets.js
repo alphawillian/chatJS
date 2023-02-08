@@ -8,6 +8,7 @@
 import { useState, useEffect } from "react";
 import classnames from "classnames";
 import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
+import MyAssets from './components/MyAssets'
 import userInfo from './data.js'
 import styles from "./assets.module.scss";
 
@@ -26,12 +27,12 @@ export default function MyDialog(props) {
   }
   // 进入页面执行
   useEffect(() => {
-    async function _() {
-      await onSubmit(question1());
-      await onSubmit(question2());
-    }
+    // async function _() {
+    //   await onSubmit(question1());
+    //   await onSubmit(question2());
+    // }
 
-    _();
+    // _();
   }, [userInfo])
 
   const question1 = () => {
@@ -97,6 +98,7 @@ export default function MyDialog(props) {
 
   return (
     <div className={styles.assetsContainer} >
+      <MyAssets userInfo={userInfo} />
       <img className={styles.intelligence} onClick={showModal} src="/Artificial intelligence.png" />
       <Modal
         closeButton

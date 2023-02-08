@@ -3,7 +3,7 @@
  * @Description: 文件描述
  * @Date: 2023-02-07 19:55:56
  * @LastEditors: willian126@126.com
- * @LastEditTime: 2023-02-08 14:20:21
+ * @LastEditTime: 2023-02-08 18:13:06
  */
 import { useState, useEffect } from "react";
 import styles from "./chat.module.scss";
@@ -40,6 +40,14 @@ export default function Home() {
     });
     setResult(result);
     setAnimalInput("");
+
+    // result.push({
+    //   type: 'gpt',
+    //   display: true,
+    //   text: 'fjdsaofja房间打扫房间哦撒娇佛的撒',
+    // });
+    // setResult(result);
+    // return false
 
     try {
       const response = await fetch("/api/generate", {
@@ -102,16 +110,21 @@ export default function Home() {
     // }
   }
 
+  const talkList = () => {
+    return (
+      result.filter(item => item.display)
+            .map(item => {
+              return <MyDialog type={item.type} text={item.text} />
+            })
+    )
+  }
+
   return (
     <div>
       
       <main className={styles.main}>
         {
-          result && result
-              .filter(item => item.display)
-              .map(item => {
-                return <MyDialog type={item.type} text={item.text} />
-              })
+          result && talkList()
         }
         <div style={{display: 'none'}}>{JSON.stringify(result)}</div>
         <div className={styles.footer}>

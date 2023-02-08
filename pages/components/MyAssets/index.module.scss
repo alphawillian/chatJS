@@ -1,0 +1,39 @@
+.main{
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
+  .top{
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 98%;
+    box-shadow: 0 0 4px 4px #ededed;
+    text-align: left;
+    padding: 10px;
+    .text{
+      color: #666;
+      font-size: 12px;
+    }
+    .total{
+      font-size: 22px;
+      color: red;
+    }
+    .line2{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      .item{
+        width: 32%;
+        .info{
+          color: #333;
+          font-size: 14px;
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+}
+
+.text{
+
+}
