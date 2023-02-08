@@ -58,10 +58,36 @@
     box-sizing: border-box;
     width: 100%;
     position: fixed;
-    display: flex;
     bottom: 0;
     padding: 4px 8px;
     left: 0px;
-    // right: 8px;
+    form{
+      display: flex;
+    }
+    .quickInput{
+      width: 100%;
+      overflow-x: scroll;
+      &::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+      }
+      .in{
+        padding: 4px 0;
+        display: flex;
+        white-space: nowrap;
+      }
+      button{
+        display: inline-block;
+        border: none;
+        out-line: none;
+        height: 24px;
+        border-radius: 12px;
+        padding: 0 6px;
+        margin-right: 8px;
+        &:nth-last-of-type(1){
+          margin-right: none;
+        }
+      }
+    }
   }
 }
